@@ -1,0 +1,2 @@
+def openFile(path):
+    pass
