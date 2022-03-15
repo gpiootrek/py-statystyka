@@ -7,3 +7,4 @@ Program rysuje histogram i wykres pudełkowy z wąsem.
 
 Osoby wykonujące: Martyna Guzik, Piotr Gołąb
 
+123123!
