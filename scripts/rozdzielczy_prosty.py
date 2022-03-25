@@ -3,9 +3,11 @@ import csv
 headers = []
 data = {}
 
-class SzeregProsty:
-    pass
-
+class RozdzielczyProsty:
+    def __init__(self, headers, data):
+        self.headers = headers
+        self.data = data
+        
 def open_file(path):
     with open(path, encoding="utf-8-sig") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=';')
@@ -19,5 +21,4 @@ def open_file(path):
                 else:
                     data[float(row[0])] = float(row[1])
             row_index+=1
-    print(headers)
-    print(data)
+    return RozdzielczyProsty(headers, data)

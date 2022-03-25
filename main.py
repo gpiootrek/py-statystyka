@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import NORMAL, DISABLED, filedialog, font, Tk
+from tkinter import NORMAL, DISABLED, filedialog, font, Tk, messagebox
 import tkinter.font as TkFont
 from scripts import rozdzielczy_prosty, rozdzielczy_przedzialowy, szereg_prosty
 
@@ -18,35 +18,29 @@ root.configure(background="#0a0908")
 default_font = font.nametofont("TkDefaultFont")
 default_font.configure(family="Candara", size=18, weight=font.NORMAL)
 btn_font = font.Font(weight=font.BOLD)
-warn_font = font.Font(size=12, weight=font.BOLD)
-
-# widgets
-warning = tk.Label(root, text="Nie wybrano pliku. Sprobuj ponownie.", bg="#0a0908", fg="#ba181b")
-
-data = []
-
+dataObject = object
 
 # handle file upload
 def upload_file(event=None):
     file_path = filedialog.askopenfilename()
     # show warning if no file selected
     if file_path == '':
-        warning['font'] = warn_font
-        warning.grid(row=6, column=1, sticky=tk.W, pady=8, padx=8)
+        messagebox.showerror("Blad", "Nie wskazano pliku. Sprobuj ponownie.")
         return
+
+    global dataObject
+
+    try:
+        if data_type.get() == "SZEREG_PROSTY":
+            dataObject = szereg_prosty.open_file(file_path)
+        elif data_type.get() == "ROZDZIELCZY_PROSTY":
+            dataObject = rozdzielczy_prosty.open_file(file_path)
+        elif data_type.get() == "ROZDZIELCZY_PRZEDZIALOWY":
+            dataObject = rozdzielczy_przedzialowy.open_file(file_path)
+    except (ValueError, IndexError) as err:
+        messagebox.showerror("Blad", f'Blad danych:\n{err}\nSprobuj ponownie.')
     else:
-        warning.destroy()
-
-    global data
-
-    if data_type.get() == "SZEREG_PROSTY":
-        data = szereg_prosty.open_file(file_path)
-    elif data_type.get() == "ROZDZIELCZY_PROSTY":
-        data = rozdzielczy_prosty.open_file(file_path)
-    elif data_type.get() == "ROZDZIELCZY_PRZEDZIALOWY":
-        data = rozdzielczy_przedzialowy.open_file(file_path)
-
-    print(data)
+        print(dataObject.data)
 
 
 # handle user click on typeInput btns - activate import btn
