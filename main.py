@@ -2,77 +2,42 @@ import tkinter as tk
 from tkinter import NORMAL, DISABLED, filedialog, font, Tk, messagebox
 import tkinter.font as TkFont
 from scripts import rozdzielczy_prosty, rozdzielczy_przedzialowy, szereg_prosty
+from pages import stats_page, start_page
 
-# import numpy as np
-# import matplotlib.pyplot as plt
-# import pandas as pd
-# import seaborn as sns
+class App(tk.Tk):
 
-# initialize window
-root = tk.Tk()
-root.geometry("600x400")
-root.wm_resizable(width=False, height=False)
-root.configure(background="#0a0908")
+    def __init__(self, *args, **kwargs):
+        tk.Tk.__init__(self, *args, **kwargs)
 
-# fonts
-default_font = font.nametofont("TkDefaultFont")
-default_font.configure(family="Candara", size=18, weight=font.NORMAL)
-btn_font = font.Font(weight=font.BOLD)
-dataObject = object
+        self.title_font = TkFont.Font(family='Helvetica', size=18, weight="bold", slant="italic")
 
-# handle file upload
-def upload_file(event=None):
-    file_path = filedialog.askopenfilename()
-    # show warning if no file selected
-    if file_path == '':
-        messagebox.showerror("Blad", "Nie wskazano pliku. Sprobuj ponownie.")
-        return
+        # the container is where we'll stack a bunch of frames
+        # on top of each other, then the one we want visible
+        # will be raised above the others
+        container = tk.Frame(self)
+        container.pack(side="top", fill="both", expand=True)
+        container.grid_rowconfigure(0, weight=1)
+        container.grid_columnconfigure(0, weight=1)
 
-    global dataObject
+        self.frames = {}
+        for Frame in (start_page.StartPage, stats_page.StatsPage):
+            page_name = Frame.__name__
+            frame = Frame(parent=container, controller=self)
+            self.frames[page_name] = frame
 
-    try:
-        if data_type.get() == "SZEREG_PROSTY":
-            dataObject = szereg_prosty.open_file(file_path)
-        elif data_type.get() == "ROZDZIELCZY_PROSTY":
-            dataObject = rozdzielczy_prosty.open_file(file_path)
-        elif data_type.get() == "ROZDZIELCZY_PRZEDZIALOWY":
-            dataObject = rozdzielczy_przedzialowy.open_file(file_path)
-    except (ValueError, IndexError) as err:
-        messagebox.showerror("Blad", f'Blad danych:\n{err}\nSprobuj ponownie.')
-    else:
-        print(dataObject.data)
+            # put all of the pages in the same location;
+            # the one on the top of the stacking order
+            # will be the one that is visible.
+            frame.grid(row=0, column=0, sticky="nsew")
+
+        self.show_frame("StartPage")
+
+    def show_frame(self, page_name):
+        '''Show a frame for the given page name'''
+        frame = self.frames[page_name]
+        frame.tkraise()
 
 
-# handle user click on typeInput btns - activate import btn
-def activate_import(event=None):
-    global file_input
-    file_input['state'] = NORMAL
-
-
-tk.Label(root, text="Wybierz typ danych do zaimportowania:", bg="#0a0908", fg="#E8F1F2").grid(row=1, column=1,
-                                                                                              columnspan=2, sticky=tk.W,
-                                                                                              padx=8, pady=4)
-
-data_type = tk.Variable()
-
-# initialize type inputs
-typeInput1 = tk.Radiobutton(root, text='Szereg prosty', variable=data_type,
-                            value="SZEREG_PROSTY", indicator=0, bg="#E8F1F2", selectcolor="#90be6d", cursor="hand2",
-                            fg="#001219", command=activate_import)
-typeInput1.grid(row=2, column=1, sticky=tk.W, pady=4, padx=8)
-
-typeInput2 = tk.Radiobutton(root, text='Szereg rozdzielczy prosty',
-                            variable=data_type, value="ROZDZIELCZY_PROSTY", indicator=0, bg="#E8F1F2",
-                            selectcolor="#90be6d", cursor="hand2", fg="#001219", command=activate_import)
-typeInput2.grid(row=3, column=1, sticky=tk.W, pady=4, padx=8)
-
-typeInput3 = tk.Radiobutton(root, text='Szereg rozdzielczy przedzialowy',
-                            variable=data_type, value="ROZDZIELCZY_PRZEDZIALOWY", indicator=0, bg="#E8F1F2",
-                            selectcolor="#90be6d", cursor="hand2", fg="#001219", command=activate_import)
-typeInput3.grid(row=4, column=1, sticky=tk.W, pady=4, padx=8)
-
-file_input = tk.Button(root, text='Wybierz plik', command=upload_file, cursor="hand2", state=DISABLED)
-file_input['font'] = btn_font
-file_input.grid(row=5, column=1, sticky=tk.W, pady=8, padx=8)
-
-tk.mainloop()
+if __name__ == "__main__":
+    app = App()
+    app.mainloop()
