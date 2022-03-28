@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import NORMAL, DISABLED, filedialog, messagebox
 from scripts import szereg_prosty, rozdzielczy_przedzialowy, rozdzielczy_prosty
 
+data_object = object
 
 class StartPage(tk.Frame):
 
@@ -43,17 +44,18 @@ class StartPage(tk.Frame):
         if file_path == '':
             messagebox.showerror("Blad", "Nie wskazano pliku. Sprobuj ponownie.")
             return
+        
+        global data_object
 
         if data_type.get() == "SZEREG_PROSTY":
-            dataObject = szereg_prosty.open_file(file_path)
+            data_object = szereg_prosty.open_file(file_path)
         elif data_type.get() == "ROZDZIELCZY_PROSTY":
-            dataObject = rozdzielczy_prosty.open_file(file_path)
+            data_object = rozdzielczy_prosty.open_file(file_path)
         elif data_type.get() == "ROZDZIELCZY_PRZEDZIALOWY":
-            dataObject = rozdzielczy_przedzialowy.open_file(file_path)
-
-        print(dataObject.data)
+            data_object = rozdzielczy_przedzialowy.open_file(file_path)
         
         self.controller.show_frame("StatsPage")
+        
 
 
     # handle user click on typeInput btns - activate import btn
