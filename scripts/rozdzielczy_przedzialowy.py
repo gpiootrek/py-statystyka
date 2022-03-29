@@ -1,5 +1,5 @@
 import csv
-from tkinter import CENTER, NO
+from tkinter import CENTER, NO, messagebox
 
 headers = []
 data = {}
@@ -8,7 +8,9 @@ class RozdzielczyPrzedzialowy:
     def __init__(self, headers, data, type):
         self.headers = headers
         self.data = data
+        
 
+# TODO Zapytac uzytkownika o naglowki, jesli plik nie posiada, dodac mozliwosc dodania w programie
 def open_file(path, type):
     with open(path, encoding="utf-8-sig") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=';')
@@ -17,8 +19,14 @@ def open_file(path, type):
             if row_index == 1:
                 headers = row
             else:
-                a, b = row[0].split('-')
-                data[(float(a),float(b))] = float(row[1])
+                try:
+                    a, b = row[0].split('-')
+                    data[(float(a),float(b))] = float(row[1])
+                except ValueError:
+                    res = messagebox.askyesno(title="Blad przy importowaniu danych!",
+                                        message=f'Wystapil blad w wierszu nr {row_index}:\n{row[0]}; {row[1]}\nPoprawny format:\nx - y; z\nCzy chcesz zaimportowac dane bez tego wiersza?')
+                    if res==False:
+                        return RozdzielczyPrzedzialowy(headers, data, type)
             row_index+=1
     return RozdzielczyPrzedzialowy(headers, data, type)
     

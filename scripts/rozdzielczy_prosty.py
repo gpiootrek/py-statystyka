@@ -1,5 +1,5 @@
 import csv
-from tkinter import CENTER, NO
+from tkinter import CENTER, NO, messagebox
 
 headers = []
 data = {}
@@ -12,6 +12,7 @@ class RozdzielczyProsty:
         self.type = type
 
 
+# TODO Zapytac uzytkownika o naglowki, jesli plik nie posiada, dodac mozliwosc dodania w programie
 def open_file(path, type):
     with open(path, encoding="utf-8-sig") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=';')
@@ -20,11 +21,17 @@ def open_file(path, type):
             if row_index == 1:
                 headers = row
             else:
-                if("," in row[0] or "," in row[1]):
-                    data[float(row[0].replace(',', '.'))] = float(
-                        row[1].replace(',', '.'))
-                else:
-                    data[float(row[0])] = float(row[1])
+                try:
+                    if("," in row[0] or "," in row[1]):
+                        data[float(row[0].replace(',', '.'))] = float(
+                            row[1].replace(',', '.'))
+                    else:
+                        data[float(row[0])] = float(row[1])
+                except ValueError:
+                    res = messagebox.askyesno(title="Blad przy importowaniu danych!",
+                                        message=f'Wystapil blad w wierszu nr {row_index}:\n{row[0]}; {row[1]}\nPoprawny format:\nx; y\nCzy chcesz zaimportowac dane bez tego wiersza?')
+                    if res==False:
+                        return RozdzielczyProsty(headers, data, type)       
             row_index += 1
     return RozdzielczyProsty(headers, data, type)
 

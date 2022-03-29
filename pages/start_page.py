@@ -1,3 +1,4 @@
+import statistics
 import tkinter as tk
 from tkinter import BOTTOM, CENTER, LEFT, NO, NORMAL, DISABLED, RIGHT, X, Y, Frame, Scrollbar, filedialog, messagebox
 from tkinter import ttk
@@ -71,13 +72,13 @@ class StartPage(tk.Frame):
 
         table_frame = Frame(self)
         table_frame.pack(pady=10)
-        
+
         data_table = ttk.Treeview(table_frame, selectmode='browse')
         data_table.pack(side=LEFT)
 
         data_scroll = Scrollbar(table_frame, command=data_table.yview)
         data_scroll.pack(side=RIGHT, fill=Y)
-        
+
         data_table.configure(yscrollcommand=data_scroll.set)
 
         if self.data_type.get() == "SZEREG_PROSTY":
@@ -86,3 +87,10 @@ class StartPage(tk.Frame):
             rozdzielczy_prosty.display_data(data_table, self.data_object)
         elif self.data_type.get() == "ROZDZIELCZY_PRZEDZIALOWY":
             rozdzielczy_przedzialowy.display_data(data_table, self.data_object)
+
+        mean_label = tk.Label(
+            self, text=f"Srednia: {round(statistics.mean(self.data_object.data),2)}")
+        mean_label.pack()
+        median_label = tk.Label(
+            self, text=f"Mediana: {round(statistics.median(self.data_object.data))}")
+        median_label.pack()
