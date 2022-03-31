@@ -1,19 +1,33 @@
 import tkinter as tk
+from tkinter import ttk
 import tkinter.font as TkFont
 from pages import start_page
+
+def darkstyle(root):
+    style = ttk.Style(root)
+    root.tk.call('source', 'azure dark/azure dark.tcl')
+    style.theme_use('azure')
+    style.configure("Accentbutton", foreground='white')
+    style.configure("Togglebutton", foreground='white')
+    return style
+
 
 class App(tk.Tk):
 
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
 
-        self.title_font = TkFont.Font(family='Helvetica', size=18, weight="bold", slant="italic")
+        self.title_font = TkFont.Font(family='arial', size=24)
+        self.button_font = TkFont.Font(family='arial', size=16)
+        self.stats_font = TkFont.Font(family='arial', size=18)
 
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
 
+        style = darkstyle(self)
+        
         self.frames = {}
         
         page_name = start_page.StartPage.__name__

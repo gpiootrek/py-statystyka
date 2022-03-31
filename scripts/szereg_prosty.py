@@ -1,6 +1,7 @@
 import csv
 import statistics
 from tkinter import CENTER, NO, messagebox
+import tkinter as tk
 
 data = []
 
@@ -24,6 +25,7 @@ def open_file(path, type):
                 if res==False:
                     return SzeregProsty(data, type)                    
             row_index += 1
+    data.sort()
     return SzeregProsty(data, type)
 
 
@@ -44,3 +46,14 @@ def display_data(table, data_object):
         table.insert(parent='', index='end', iid=index, text='',
                      values=(index + 1, row))
         index += 1
+
+def show_stats(root, controller, data):
+    mean_label = tk.Label(
+        root, text=f"Srednia: {round(statistics.mean(data),2)}", font=controller.stats_font)
+    mean_label.pack()
+    median_label = tk.Label(
+        root, text=f"Mediana: {round(statistics.median(data),2)}", font=controller.stats_font)
+    median_label.pack()
+    stdev_label = tk.Label(
+        root, text=f"Odchylenie standardowe: {round(statistics.stdev(data),2)}", font=controller.stats_font)
+    stdev_label.pack()

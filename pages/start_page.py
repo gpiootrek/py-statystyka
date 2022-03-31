@@ -5,6 +5,7 @@ from tkinter import ttk
 from scripts import szereg_prosty, rozdzielczy_przedzialowy, rozdzielczy_prosty
 
 
+
 class StartPage(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -12,33 +13,33 @@ class StartPage(tk.Frame):
         self.controller = controller
         self.data_object = object
         self.data_type = tk.Variable()
-
+        
         self.label = tk.Label(
             self, text="Wybierz typ danych do zaimportowania:", font=controller.title_font)
-        self.label.pack(side="top", fill="x", pady=10)
+        self.label.pack(side="top", fill="x", pady=10, padx=24)
 
         self.type_input1 = tk.Radiobutton(self, text='Szereg prosty', variable=self.data_type,
-                                          value="SZEREG_PROSTY", indicator=0, bg="#E8F1F2", selectcolor="#90be6d", cursor="hand2",
-                                          fg="#001219", command=lambda: self.activate_import(self.file_input))
+                                          value="SZEREG_PROSTY", indicator=0, bg="#E8F1F2", selectcolor="#00A8E8", cursor="hand2",
+                                          fg="#001219", command=lambda: self.activate_import(self.file_input), font=controller.button_font)
         self.type_input1.pack(side="top", pady=5)
 
         self.type_input2 = tk.Radiobutton(self, text='Szereg rozdzielczy prosty',
                                           variable=self.data_type, value="ROZDZIELCZY_PROSTY", indicator=0, bg="#E8F1F2",
-                                          selectcolor="#90be6d", cursor="hand2", fg="#001219", command=lambda: self.activate_import(self.file_input))
+                                          selectcolor="#00A8E8", cursor="hand2", fg="#001219", command=lambda: self.activate_import(self.file_input), font=controller.button_font)
         self.type_input2.pack(side="top", pady=5)
 
         self.type_input3 = tk.Radiobutton(self, text='Szereg rozdzielczy przedzialowy',
                                           variable=self.data_type, value="ROZDZIELCZY_PRZEDZIALOWY", indicator=0, bg="#E8F1F2",
-                                          selectcolor="#90be6d", cursor="hand2", fg="#001219", command=lambda: self.activate_import(self.file_input))
+                                          selectcolor="#00A8E8", cursor="hand2", fg="#001219", command=lambda: self.activate_import(self.file_input), font=controller.button_font)
         self.type_input3.pack(side="top", pady=5)
 
-        self.file_input = tk.Button(
-            self, text='Wybierz plik', command=self.upload_file, cursor="hand2", state=DISABLED)
+        self.file_input = ttk.Button(
+            self, text='Wybierz plik', command=lambda: self.upload_file(controller), cursor="hand2", state=DISABLED, style="Accentbutton")
         self.file_input.pack(side="top", pady=10)
 
     # handle file upload
 
-    def upload_file(self):
+    def upload_file(self, controller):
         file_path = filedialog.askopenfilename()
 
         # show warning if no file selected
@@ -57,13 +58,13 @@ class StartPage(tk.Frame):
             self.data_object = rozdzielczy_przedzialowy.open_file(
                 file_path, self.data_type.get())
 
-        self.display_stats()
+        self.display_stats(controller)
 
     # handle user click on typeInput btns - activate import btn
     def activate_import(self, inputBtn):
         inputBtn['state'] = NORMAL
 
-    def display_stats(self):
+    def display_stats(self, controller):
         self.label.configure(text="Wyniki:")
         self.type_input1.destroy()
         self.type_input2.destroy()
@@ -83,14 +84,11 @@ class StartPage(tk.Frame):
 
         if self.data_type.get() == "SZEREG_PROSTY":
             szereg_prosty.display_data(data_table, self.data_object)
+            szereg_prosty.show_stats(self, controller, self.data_object.data)
         elif self.data_type.get() == "ROZDZIELCZY_PROSTY":
             rozdzielczy_prosty.display_data(data_table, self.data_object)
+            rozdzielczy_prosty.show_stats(self, controller, self.data_object.data)
         elif self.data_type.get() == "ROZDZIELCZY_PRZEDZIALOWY":
             rozdzielczy_przedzialowy.display_data(data_table, self.data_object)
+            rozdzielczy_przedzialowy.show_stats(self, controller, self.data_object.data)
 
-        mean_label = tk.Label(
-            self, text=f"Srednia: {round(statistics.mean(self.data_object.data),2)}")
-        mean_label.pack()
-        median_label = tk.Label(
-            self, text=f"Mediana: {round(statistics.median(self.data_object.data))}")
-        median_label.pack()
