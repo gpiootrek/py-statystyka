@@ -4,11 +4,6 @@ from tkinter import CENTER, NO, messagebox
 headers = []
 data = {}
 
-class RozdzielczyPrzedzialowy:
-    def __init__(self, headers, data, type):
-        self.headers = headers
-        self.data = data
-        
 
 # TODO Zapytac uzytkownika o naglowki, jesli plik nie posiada, dodac mozliwosc dodania w programie
 def open_file(path, type):
@@ -29,26 +24,32 @@ def open_file(path, type):
                         return RozdzielczyPrzedzialowy(headers, data, type)
             row_index+=1
     return RozdzielczyPrzedzialowy(headers, data, type)
-    
-def display_data(table, data_object):
-    table['columns'] = ('lp', data_object.headers[0], data_object.headers[1])
 
-    table.column("#0", width=0,  stretch=NO)
-    table.column("lp", anchor=CENTER, width=40)
-    table.column(data_object.headers[0], anchor=CENTER, width=80)
-    table.column(data_object.headers[1], anchor=CENTER, width=80)
 
-    table.heading("#0", text="", anchor=CENTER)
-    table.heading("lp", text="L.p.", anchor=CENTER)
-    table.heading(data_object.headers[0],
-                  text=data_object.headers[0], anchor=CENTER)
-    table.heading(data_object.headers[1],
-                  text=data_object.headers[1], anchor=CENTER)
+class RozdzielczyPrzedzialowy:
+    def __init__(self, headers, data, type):
+        self.headers = headers
+        self.data = data
+        
+    def display_data(table, data_object):
+        table['columns'] = ('lp', data_object.headers[0], data_object.headers[1])
 
-    index = 0
+        table.column("#0", width=0,  stretch=NO)
+        table.column("lp", anchor=CENTER, width=40)
+        table.column(data_object.headers[0], anchor=CENTER, width=80)
+        table.column(data_object.headers[1], anchor=CENTER, width=80)
 
-    for key in data_object.data:
-        min, max = key
-        table.insert(parent='', index='end', iid=index, text='',
-                     values=(index + 1, f'{min} - {max}', data_object.data[key]))
-        index += 1
+        table.heading("#0", text="", anchor=CENTER)
+        table.heading("lp", text="L.p.", anchor=CENTER)
+        table.heading(data_object.headers[0],
+                    text=data_object.headers[0], anchor=CENTER)
+        table.heading(data_object.headers[1],
+                    text=data_object.headers[1], anchor=CENTER)
+
+        index = 0
+
+        for key in data_object.data:
+            min, max = key
+            table.insert(parent='', index='end', iid=index, text='',
+                        values=(index + 1, f'{min} - {max}', data_object.data[key]))
+            index += 1

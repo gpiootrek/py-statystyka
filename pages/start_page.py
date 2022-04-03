@@ -4,8 +4,6 @@ from tkinter import BOTTOM, CENTER, LEFT, NO, NORMAL, DISABLED, RIGHT, X, Y, Fra
 from tkinter import ttk
 from scripts import szereg_prosty, rozdzielczy_przedzialowy, rozdzielczy_prosty
 
-
-
 class StartPage(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -13,7 +11,7 @@ class StartPage(tk.Frame):
         self.controller = controller
         self.data_object = object
         self.data_type = tk.Variable()
-        
+
         self.label = tk.Label(
             self, text="Wybierz typ danych do zaimportowania:", font=controller.title_font)
         self.label.pack(side="top", fill="x", pady=10, padx=24)
@@ -83,12 +81,13 @@ class StartPage(tk.Frame):
         data_table.configure(yscrollcommand=data_scroll.set)
 
         if self.data_type.get() == "SZEREG_PROSTY":
-            szereg_prosty.display_data(data_table, self.data_object)
-            szereg_prosty.show_stats(self, controller, self.data_object.data)
+            szereg_prosty.SzeregProsty.display_data(data_table, self.data_object)
+            szereg_prosty.SzeregProsty.show_stats(self, controller, self.data_object.data)
         elif self.data_type.get() == "ROZDZIELCZY_PROSTY":
-            rozdzielczy_prosty.display_data(data_table, self.data_object)
-            rozdzielczy_prosty.show_stats(self, controller, self.data_object.data)
+            rozdzielczy_prosty.RozdzielczyProsty.display_data(data_table, self.data_object)
+            rozdzielczy_prosty.RozdzielczyProsty.show_stats(
+                self, controller, self.data_object.data)
         elif self.data_type.get() == "ROZDZIELCZY_PRZEDZIALOWY":
-            rozdzielczy_przedzialowy.display_data(data_table, self.data_object)
-            rozdzielczy_przedzialowy.show_stats(self, controller, self.data_object.data)
-
+            rozdzielczy_przedzialowy.RozdzielczyPrzedzialowy.display_data(data_table, self.data_object)
+            rozdzielczy_przedzialowy.RozdzielczyPrzedzialowy.show_stats(
+                self, controller, self.data_object.data)

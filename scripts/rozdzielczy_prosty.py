@@ -5,13 +5,6 @@ headers = []
 data = {}
 
 
-class RozdzielczyProsty:
-    def __init__(self, headers, data, type):
-        self.headers = headers
-        self.data = data
-        self.type = type
-
-
 # TODO Zapytac uzytkownika o naglowki, jesli plik nie posiada, dodac mozliwosc dodania w programie
 def open_file(path, type):
     with open(path, encoding="utf-8-sig") as csv_file:
@@ -36,24 +29,32 @@ def open_file(path, type):
     return RozdzielczyProsty(headers, data, type)
 
 
-def display_data(table, data_object):
-    table['columns'] = ('lp', data_object.headers[0], data_object.headers[1])
+class RozdzielczyProsty:
+    def __init__(self, headers, data, type):
+        self.headers = headers
+        self.data = data
+        self.type = type
 
-    table.column("#0", width=0,  stretch=NO)
-    table.column("lp", anchor=CENTER, width=40)
-    table.column(data_object.headers[0], anchor=CENTER, width=80)
-    table.column(data_object.headers[1], anchor=CENTER, width=80)
 
-    table.heading("#0", text="", anchor=CENTER)
-    table.heading("lp", text="L.p.", anchor=CENTER)
-    table.heading(data_object.headers[0],
-                  text=data_object.headers[0], anchor=CENTER)
-    table.heading(data_object.headers[1],
-                  text=data_object.headers[1], anchor=CENTER)
 
-    index = 0
+    def display_data(table, data_object):
+        table['columns'] = ('lp', data_object.headers[0], data_object.headers[1])
 
-    for key in data_object.data:
-        table.insert(parent='', index='end', iid=index, text='',
-                     values=(index + 1, key, data_object.data[key]))
-        index += 1
+        table.column("#0", width=0,  stretch=NO)
+        table.column("lp", anchor=CENTER, width=40)
+        table.column(data_object.headers[0], anchor=CENTER, width=80)
+        table.column(data_object.headers[1], anchor=CENTER, width=80)
+
+        table.heading("#0", text="", anchor=CENTER)
+        table.heading("lp", text="L.p.", anchor=CENTER)
+        table.heading(data_object.headers[0],
+                    text=data_object.headers[0], anchor=CENTER)
+        table.heading(data_object.headers[1],
+                    text=data_object.headers[1], anchor=CENTER)
+
+        index = 0
+
+        for key in data_object.data:
+            table.insert(parent='', index='end', iid=index, text='',
+                        values=(index + 1, key, data_object.data[key]))
+            index += 1

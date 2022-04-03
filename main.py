@@ -20,6 +20,7 @@ class App(tk.Tk):
         self.title_font = TkFont.Font(family='arial', size=24)
         self.button_font = TkFont.Font(family='arial', size=16)
         self.stats_font = TkFont.Font(family='arial', size=18)
+        self.interpretation_font = TkFont.Font(family='arial', size=14, weight="normal")
 
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
