@@ -1,6 +1,8 @@
 import csv
+import statistics
 from tkinter import CENTER, NO, messagebox
-
+import tkinter as tk
+from scripts import prosty_stat
 headers = []
 data = {}
 
@@ -58,3 +60,37 @@ class RozdzielczyProsty:
             table.insert(parent='', index='end', iid=index, text='',
                         values=(index + 1, key, data_object.data[key]))
             index += 1
+    # calc and show stats
+    def show_stats(root, controller, data):
+
+        stats = prosty_stat.Statistics(data)
+        mean = stats.mean
+        stdev = stats.stdev
+        # median = stats.median
+
+        mean_label = tk.Label(
+            root, text=f"Srednia: {round(mean,2)}", font=controller.stats_font)
+        mean_label.pack()
+        
+        mean_interpretation = tk.Label(root, text=f"Srednia wartosc w badanej próbie wynosi {round(mean,2)}", font=controller.interpretation_font, foreground="#ccc")
+        mean_interpretation.pack()
+        
+        # median_label = tk.Label(
+        #     root, text=f"Mediana: {round(median,2)}", font=controller.stats_font)
+        # median_label.pack()
+
+        stdev_label = tk.Label(
+            root, text=f"Odchylenie standardowe: {round(stdev,2)}", font=controller.stats_font)
+        stdev_label.pack()
+
+        wspzm_label = tk.Label(
+            root, text=f"Wspolczynnik zmiennosci: {stats.wspzm}%", font=controller.stats_font)
+        wspzm_label.pack()
+
+        # wspasm_label = tk.Label(
+        #     root, text=f"Wspolczynnik asymetrii: {stats.wspasm}", font=controller.stats_font)
+        # wspasm_label.pack()
+        
+        # hist_label = tk.Label(
+        #     root, text="Histogram:", font=controller.stats_font)
+        # hist_label.pack()
