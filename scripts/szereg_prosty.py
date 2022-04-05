@@ -1,17 +1,12 @@
 import csv
 from math import sqrt
 import statistics
-from tkinter import BOTH, CENTER, NO, TOP, messagebox
+from tkinter import CENTER, NO, messagebox
 import tkinter as tk
 from matplotlib.backends.backend_tkagg import (
-    FigureCanvasTkAgg, NavigationToolbar2Tk)
-# Implement the default Matplotlib key bindings.
-from matplotlib.backend_bases import key_press_handler
+    FigureCanvasTkAgg)
 from matplotlib.figure import Figure
-import matplotlib.pyplot as plt
-from matplotlib.ticker import PercentFormatter
-import numpy as np
-from scripts import szereg_stat, prosty_stat, przedzialowy_stat
+from scripts import szereg_stat
 data = []
 
 
@@ -23,6 +18,7 @@ def open_file(path, type):
             try:
                 data.append(float(row[0].replace(',', '.')))
             except (ValueError):
+                # TODO zapytac czy uzytkownik chce poprawic linijke
                 res = messagebox.askyesno(title="Blad przy importowaniu danych!",
                                           message=f'Wystapil blad w wierszu nr {row_index}:\n{row[0]}\nCzy chcesz zaimportowac dane bez tego wiersza?')
                 if res == False:
@@ -73,10 +69,18 @@ class SzeregProsty:
             root, text=f"Mediana: {round(statistics.median(data),2)}", font=controller.stats_font)
         median_label.pack()
 
+        # TODO interpretacja mediany
+        # mean_interpretation = tk.Label(root, text=f"Srednia wartosc w badanej próbie wynosi {round(mean,2)}", font=controller.interpretation_font, foreground="#ccc")
+        # mean_interpretation.pack()
+        
         stdev_label = tk.Label(
             root, text=f"Odchylenie standardowe: {round(stdev,2)}", font=controller.stats_font)
         stdev_label.pack()
 
+        # TODO interpretacja odchylenia standardowego
+        # mean_interpretation = tk.Label(root, text=f"Srednia wartosc w badanej próbie wynosi {round(mean,2)}", font=controller.interpretation_font, foreground="#ccc")
+        # mean_interpretation.pack()
+        
         range_label = tk.Label(
             root, text=f"Rozstep: {round(data[-1] - data[0],2)}", font=controller.stats_font)
         range_label.pack()
@@ -87,9 +91,25 @@ class SzeregProsty:
             root, text=f"Wspolczynnik zmiennosci: {stats.wspzm}%", font=controller.stats_font)
         wspzm_label.pack()
 
+        # TODO interpretacja wspolczynnika zmiennosci
+        # mean_interpretation = tk.Label(root, text=f"Srednia wartosc w badanej próbie wynosi {round(mean,2)}", font=controller.interpretation_font, foreground="#ccc")
+        # mean_interpretation.pack()
+        
         wspasm_label = tk.Label(
             root, text=f"Wspolczynnik asymetrii: {stats.wspasm}", font=controller.stats_font)
         wspasm_label.pack()
+        
+        # TODO interpretacja wspolczynnika asymetrii
+        # mean_interpretation = tk.Label(root, text=f"Srednia wartosc w badanej próbie wynosi {round(mean,2)}", font=controller.interpretation_font, foreground="#ccc")
+        # mean_interpretation.pack()
+        
+        kurtoza_label = tk.Label(
+            root, text=f"Kurtoza: {stats.kurtoza}", font=controller.stats_font)
+        kurtoza_label.pack()
+        
+        # TODO interpretacja kurtozy
+        # mean_interpretation = tk.Label(root, text=f"Srednia wartosc w badanej próbie wynosi {round(mean,2)}", font=controller.interpretation_font, foreground="#ccc")
+        # mean_interpretation.pack()
         
         hist_label = tk.Label(
             root, text="Histogram:", font=controller.stats_font)

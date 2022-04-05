@@ -8,9 +8,16 @@ class Statistics:
         self.mean = mean
         self.wspzm = round((self.stdev / self.mean) * 100,2)
         self.wspasm = round(self.thirdcm() / stdev**3,2)
+        self.kurtoza = round(self.fourthcm() / stdev**4, 2)
     
     def thirdcm(self):
         sum = 0
         for el in self.data:
             sum += (el - self.mean)**3
+        return sum/len(self.data)
+    
+    def fourthcm(self):
+        sum = 0
+        for el in self.data:
+            sum += (el - self.mean)**4
         return sum/len(self.data)

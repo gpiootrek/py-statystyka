@@ -18,6 +18,7 @@ def open_file(path, type):
                     a, b = row[0].split('-')
                     data[(float(a),float(b))] = float(row[1])
                 except ValueError:
+                    # TODO zapytac czy uzytkownik chce poprawic linijke
                     res = messagebox.askyesno(title="Blad przy importowaniu danych!",
                                         message=f'Wystapil blad w wierszu nr {row_index}:\n{row[0]}; {row[1]}\nPoprawny format:\nx - y; z\nCzy chcesz zaimportowac dane bez tego wiersza?')
                     if res==False:
