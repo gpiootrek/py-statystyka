@@ -20,13 +20,33 @@ class Statistics:
         pass
 
     def mean(self):
-        pass
+        counter = 0
+        sum = 0
+        for key in self.data:
+            counter += self.data[key]
+            sum += ((key[0] + key[1]) / 2) * self.data[key]
+        return sum / counter
 
     def stdev(self):
-        pass
+        counter = 0
+        sum = 0
+        for key in self.data:
+            counter += self.data[key]
+            sum += (((key[0] + key[1]) / 2) - self.mean)**2 * self.data[key]
+        return math.sqrt(sum / counter)
 
     def thirdcm(self):
-        pass
+        counter = 0
+        sum = 0
+        for key in self.data:
+            counter += self.data[key]
+            sum += (((key[0] + key[1]) / 2) - self.mean)**3 * self.data[key]
+        return sum / counter
 
     def fourthcm(self):
-        pass
+        counter = 0
+        sum = 0
+        for key in self.data:
+            counter += self.data[key]
+            sum += (((key[0] + key[1]) / 2) - self.mean)**4 * self.data[key]
+        return sum / counter

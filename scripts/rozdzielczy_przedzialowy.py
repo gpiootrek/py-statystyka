@@ -1,6 +1,7 @@
 import csv
+import tkinter as tk
 from tkinter import CENTER, NO, messagebox
-
+from scripts import przedzialowy_stat
 headers = []
 data = {}
 
@@ -54,3 +55,54 @@ class RozdzielczyPrzedzialowy:
             table.insert(parent='', index='end', iid=index, text='',
                         values=(index + 1, f'{min} - {max}', data_object.data[key]))
             index += 1
+
+    # calc and show stats
+    def show_stats(root, controller, data):
+
+        stats = przedzialowy_stat.Statistics(data)
+        mean = stats.mean
+        stdev = stats.stdev
+        # median = stats.median
+
+        mean_label = tk.Label(
+            root, text=f"Srednia: {round(mean,2)}", font=controller.stats_font)
+        mean_label.pack()
+
+        mean_interpretation = tk.Label(
+            root, text=f"Srednia wartosc w badanej próbie wynosi {round(mean,2)}", font=controller.interpretation_font, foreground="#ccc")
+        mean_interpretation.pack()
+
+        # median_label = tk.Label(
+        #     root, text=f"Mediana: {round(median,2)}", font=controller.stats_font)
+        # median_label.pack()
+
+        stdev_label = tk.Label(
+            root, text=f"Odchylenie standardowe: {round(stdev,2)}", font=controller.stats_font)
+        stdev_label.pack()
+
+        stdev_interpretation = tk.Label(root, text=f"O tyle przecietnie roznia sie obserwacje od sredniej.", font=controller.interpretation_font, foreground="#ccc")
+        stdev_interpretation.pack()
+
+        wspzm_label = tk.Label(
+            root, text=f"Wspolczynnik zmiennosci: {stats.wspzm}%", font=controller.stats_font)
+        wspzm_label.pack()
+
+        # TODO interpretacja wspolczynnika zmiennosci
+        # mean_interpretation = tk.Label(root, text=f"Srednia wartosc w badanej próbie wynosi {round(mean,2)}", font=controller.interpretation_font, foreground="#ccc")
+        # mean_interpretation.pack()
+
+        wspasm_label = tk.Label(
+            root, text=f"Wspolczynnik asymetrii: {stats.wspasm}", font=controller.stats_font)
+        wspasm_label.pack()
+
+        # TODO interpretacja wspolczynnika asymetrii
+        # mean_interpretation = tk.Label(root, text=f"Srednia wartosc w badanej próbie wynosi {round(mean,2)}", font=controller.interpretation_font, foreground="#ccc")
+        # mean_interpretation.pack()
+
+        kurtoza_label = tk.Label(
+            root, text=f"Kurtoza: {stats.kurtoza}", font=controller.stats_font)
+        kurtoza_label.pack()
+
+        # TODO interpretacja kurtozy
+        # mean_interpretation = tk.Label(root, text=f"Srednia wartosc w badanej próbie wynosi {round(mean,2)}", font=controller.interpretation_font, foreground="#ccc")
+        # mean_interpretation.pack()

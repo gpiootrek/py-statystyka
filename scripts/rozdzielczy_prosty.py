@@ -89,9 +89,8 @@ class RozdzielczyProsty:
             root, text=f"Odchylenie standardowe: {round(stdev,2)}", font=controller.stats_font)
         stdev_label.pack()
 
-        # TODO interpretacja odchylenia standardowego
-        # mean_interpretation = tk.Label(root, text=f"Srednia wartosc w badanej próbie wynosi {round(mean,2)}", font=controller.interpretation_font, foreground="#ccc")
-        # mean_interpretation.pack()
+        stdev_interpretation = tk.Label(root, text=f"O tyle przecietnie roznia sie obserwacje od sredniej.", font=controller.interpretation_font, foreground="#ccc")
+        stdev_interpretation.pack()
 
         wspzm_label = tk.Label(
             root, text=f"Wspolczynnik zmiennosci: {stats.wspzm}%", font=controller.stats_font)
