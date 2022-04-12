@@ -1,7 +1,7 @@
 import csv
 from math import sqrt
 import statistics
-from tkinter import CENTER, NO, messagebox
+from tkinter import CENTER, LEFT, NO, messagebox
 import tkinter as tk
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg)
@@ -61,30 +61,33 @@ class SzeregProsty:
         mean_label = tk.Label(
             root, text=f"Srednia: {round(mean,2)}", font=controller.stats_font)
         mean_label.pack()
-        
-        mean_interpretation = tk.Label(root, text=f"Srednia wartosc w badanej próbie wynosi {round(mean,2)}", font=controller.interpretation_font, foreground="#ccc")
+
+        mean_interpretation = tk.Label(
+            root, text=f"Srednia wartosc w badanej próbie wynosi {round(mean,2)}", font=controller.interpretation_font, foreground="#ccc")
         mean_interpretation.pack()
-        
+
         median_label = tk.Label(
             root, text=f"Mediana: {round(statistics.median(data),2)}", font=controller.stats_font)
         median_label.pack()
 
-        # TODO interpretacja mediany
-        # mean_interpretation = tk.Label(root, text=f"Srednia wartosc w badanej próbie wynosi {round(mean,2)}", font=controller.interpretation_font, foreground="#ccc")
-        # mean_interpretation.pack()
-        
+        median_interpretation = tk.Label(
+            root, text=f"Liczba {round(statistics.median(data),2)} dzieli obserwacje na 2 rowne co do ilosci grupy.", font=controller.interpretation_font, foreground="#ccc")
+        median_interpretation.pack()
+
         stdev_label = tk.Label(
             root, text=f"Odchylenie standardowe: {round(stdev,2)}", font=controller.stats_font)
         stdev_label.pack()
 
-        # TODO interpretacja odchylenia standardowego
-        # mean_interpretation = tk.Label(root, text=f"Srednia wartosc w badanej próbie wynosi {round(mean,2)}", font=controller.interpretation_font, foreground="#ccc")
-        # mean_interpretation.pack()
-        
+        stdev_interpretation = tk.Label(root, text=f"O tyle przecietnie roznia sie obserwacje od sredniej.", font=controller.interpretation_font, foreground="#ccc")
+        stdev_interpretation.pack()
+
         range_label = tk.Label(
             root, text=f"Rozstep: {round(data[-1] - data[0],2)}", font=controller.stats_font)
         range_label.pack()
 
+        range_interpretation = tk.Label(root, text=f"Jest to roznica miedzy wartoscia max a min.", font=controller.interpretation_font, foreground="#ccc")
+        range_interpretation.pack()
+        
         stats = szereg_stat.Statistics(data, stdev, mean)
 
         wspzm_label = tk.Label(
@@ -92,25 +95,25 @@ class SzeregProsty:
         wspzm_label.pack()
 
         # TODO interpretacja wspolczynnika zmiennosci
-        # mean_interpretation = tk.Label(root, text=f"Srednia wartosc w badanej próbie wynosi {round(mean,2)}", font=controller.interpretation_font, foreground="#ccc")
-        # mean_interpretation.pack()
-        
+        # wspzm_interpretation = tk.Label(root, text=f"Srednia wartosc w badanej próbie wynosi {round(mean,2)}", font=controller.interpretation_font, foreground="#ccc")
+        # wspzm_interpretation.pack()
+
         wspasm_label = tk.Label(
             root, text=f"Wspolczynnik asymetrii: {stats.wspasm}", font=controller.stats_font)
         wspasm_label.pack()
-        
+
         # TODO interpretacja wspolczynnika asymetrii
-        # mean_interpretation = tk.Label(root, text=f"Srednia wartosc w badanej próbie wynosi {round(mean,2)}", font=controller.interpretation_font, foreground="#ccc")
-        # mean_interpretation.pack()
-        
+        # wspasm_interpretation = tk.Label(root, text=f"Srednia wartosc w badanej próbie wynosi {round(mean,2)}", font=controller.interpretation_font, foreground="#ccc")
+        # wspasm_interpretation.pack()
+
         kurtoza_label = tk.Label(
             root, text=f"Kurtoza: {stats.kurtoza}", font=controller.stats_font)
         kurtoza_label.pack()
-        
+
         # TODO interpretacja kurtozy
-        # mean_interpretation = tk.Label(root, text=f"Srednia wartosc w badanej próbie wynosi {round(mean,2)}", font=controller.interpretation_font, foreground="#ccc")
-        # mean_interpretation.pack()
-        
+        # kurtoza_interpretation = tk.Label(root, text=f"Srednia wartosc w badanej próbie wynosi {round(mean,2)}", font=controller.interpretation_font, foreground="#ccc")
+        # kurtoza_interpretation.pack()
+
         hist_label = tk.Label(
             root, text="Histogram:", font=controller.stats_font)
         hist_label.pack()
