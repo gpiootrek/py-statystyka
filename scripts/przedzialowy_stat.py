@@ -9,7 +9,8 @@ class Statistics:
         self.stdev = self.stdev()
         self.wspzm = round((self.stdev / self.mean) * 100, 2)
         self.wspasm = round(self.thirdcm() / self.stdev**3, 2)
-
+        self.kurtoza = round(self.fourthcm() / self.stdev**4, 2)
+    
     def count(self):
         counter = 0
         for key in self.data:

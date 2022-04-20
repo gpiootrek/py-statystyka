@@ -6,7 +6,7 @@ import tkinter as tk
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg)
 from matplotlib.figure import Figure
-from scripts import szereg_stat
+from scripts import szereg_stat, labels
 data = []
 
 
@@ -57,6 +57,9 @@ class SzeregProsty:
 
         stdev = statistics.stdev(data)
         mean = statistics.mean(data)
+        stats = szereg_stat.Statistics(data, stdev, mean)
+        
+        interpretations = labels.Labels(stats.kurtoza, stats.wspzm, stats.wspasm)
 
         mean_label = tk.Label(
             root, text=f"Srednia: {round(mean,2)}", font=controller.stats_font)
@@ -87,32 +90,27 @@ class SzeregProsty:
 
         range_interpretation = tk.Label(root, text=f"Jest to roznica miedzy wartoscia max a min.", font=controller.interpretation_font, foreground="#ccc")
         range_interpretation.pack()
-        
-        stats = szereg_stat.Statistics(data, stdev, mean)
 
         wspzm_label = tk.Label(
             root, text=f"Wspolczynnik zmiennosci: {stats.wspzm}%", font=controller.stats_font)
         wspzm_label.pack()
 
-        # TODO interpretacja wspolczynnika zmiennosci
-        # wspzm_interpretation = tk.Label(root, text=f"Srednia wartosc w badanej próbie wynosi {round(mean,2)}", font=controller.interpretation_font, foreground="#ccc")
-        # wspzm_interpretation.pack()
+        wspzm_interpretation = tk.Label(root, text=interpretations.get_wspzm_label(), font=controller.interpretation_font, foreground="#ccc")
+        wspzm_interpretation.pack()
 
         wspasm_label = tk.Label(
             root, text=f"Wspolczynnik asymetrii: {stats.wspasm}", font=controller.stats_font)
         wspasm_label.pack()
 
-        # TODO interpretacja wspolczynnika asymetrii
-        # wspasm_interpretation = tk.Label(root, text=f"Srednia wartosc w badanej próbie wynosi {round(mean,2)}", font=controller.interpretation_font, foreground="#ccc")
-        # wspasm_interpretation.pack()
+        wspasm_interpretation = tk.Label(root, text=interpretations.get_wspasm_label(), font=controller.interpretation_font, foreground="#ccc")
+        wspasm_interpretation.pack()
 
         kurtoza_label = tk.Label(
             root, text=f"Kurtoza: {stats.kurtoza}", font=controller.stats_font)
         kurtoza_label.pack()
 
-        # TODO interpretacja kurtozy
-        # kurtoza_interpretation = tk.Label(root, text=f"Srednia wartosc w badanej próbie wynosi {round(mean,2)}", font=controller.interpretation_font, foreground="#ccc")
-        # kurtoza_interpretation.pack()
+        kurtoza_interpretation = tk.Label(root, text=interpretations.get_kurtoza_label(), font=controller.interpretation_font, foreground="#ccc")
+        kurtoza_interpretation.pack()
 
         hist_label = tk.Label(
             root, text="Histogram:", font=controller.stats_font)

@@ -1,6 +1,6 @@
 import statistics
 import tkinter as tk
-from tkinter import BOTTOM, CENTER, LEFT, NO, NORMAL, DISABLED, RIGHT, X, Y, Frame, Scrollbar, filedialog, messagebox
+from tkinter import BOTH, BOTTOM, CENTER, LEFT, NO, NORMAL, DISABLED, RIGHT, X, Y, Frame, Scrollbar, filedialog, messagebox
 from tkinter import ttk
 from scripts import szereg_prosty, rozdzielczy_przedzialowy, rozdzielczy_prosty
 
@@ -70,7 +70,7 @@ class StartPage(tk.Frame):
         self.file_input.destroy()
 
         table_frame = Frame(self)
-        table_frame.pack(pady=10)
+        table_frame.pack(side=LEFT, pady=10)
 
         data_table = ttk.Treeview(table_frame, selectmode='browse')
         data_table.pack(side=LEFT)

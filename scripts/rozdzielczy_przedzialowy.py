@@ -1,7 +1,7 @@
 import csv
 import tkinter as tk
 from tkinter import CENTER, NO, messagebox
-from scripts import przedzialowy_stat
+from scripts import przedzialowy_stat, labels
 headers = []
 data = {}
 
@@ -63,6 +63,7 @@ class RozdzielczyPrzedzialowy:
         mean = stats.mean
         stdev = stats.stdev
         # median = stats.median
+        interpretations = labels.Labels(stats.kurtoza, stats.wspzm, stats.wspasm)
 
         mean_label = tk.Label(
             root, text=f"Srednia: {round(mean,2)}", font=controller.stats_font)
@@ -87,22 +88,19 @@ class RozdzielczyPrzedzialowy:
             root, text=f"Wspolczynnik zmiennosci: {stats.wspzm}%", font=controller.stats_font)
         wspzm_label.pack()
 
-        # TODO interpretacja wspolczynnika zmiennosci
-        # mean_interpretation = tk.Label(root, text=f"Srednia wartosc w badanej próbie wynosi {round(mean,2)}", font=controller.interpretation_font, foreground="#ccc")
-        # mean_interpretation.pack()
+        wspzm_interpretation = tk.Label(root, text=interpretations.get_wspzm_label(), font=controller.interpretation_font, foreground="#ccc")
+        wspzm_interpretation.pack()
 
         wspasm_label = tk.Label(
             root, text=f"Wspolczynnik asymetrii: {stats.wspasm}", font=controller.stats_font)
         wspasm_label.pack()
 
-        # TODO interpretacja wspolczynnika asymetrii
-        # mean_interpretation = tk.Label(root, text=f"Srednia wartosc w badanej próbie wynosi {round(mean,2)}", font=controller.interpretation_font, foreground="#ccc")
-        # mean_interpretation.pack()
+        wspasm_interpretation = tk.Label(root, text=interpretations.get_wspasm_label(), font=controller.interpretation_font, foreground="#ccc")
+        wspasm_interpretation.pack()
 
         kurtoza_label = tk.Label(
             root, text=f"Kurtoza: {stats.kurtoza}", font=controller.stats_font)
         kurtoza_label.pack()
 
-        # TODO interpretacja kurtozy
-        # mean_interpretation = tk.Label(root, text=f"Srednia wartosc w badanej próbie wynosi {round(mean,2)}", font=controller.interpretation_font, foreground="#ccc")
-        # mean_interpretation.pack()
+        kurtoza_interpretation = tk.Label(root, text=interpretations.get_kurtoza_label(), font=controller.interpretation_font, foreground="#ccc")
+        kurtoza_interpretation.pack()
