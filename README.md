@@ -19,7 +19,7 @@ W programie możliwe jest importowanie danych z plików w formacie .csv. Struktu
 ### Szereg prosty
 To plik składający się jedynie z danych liczbowych oddzielonych znakami nowej linii.
 ||
-|--|-
+|--|
 | 1 | 
 | 2 |
 | 3 | 
@@ -37,6 +37,7 @@ W tym pliku muszą znajdować się także nagłówki tabeli.
 | 4 | 5 |
 | 4.5 | 2 |
 | 5 | 1 |
+
 ![Przykładowe dane](https://i.imgur.com/CYbGAeF.png)
 ### Szereg rozdzielczy przedziałowy
 Plik z podobną strukturą do szeregu rozdzielczego prostego. Ważne jest, aby przedziały były oznaczane za pomocą '-'.
@@ -49,5 +50,6 @@ Plik z podobną strukturą do szeregu rozdzielczego prostego. Ważne jest, aby p
 | 42 - 48 | 76 |
 | 48 - 54 | 21 |
 | 54 - 60 | 47 |
+
 ![Przykładowe dane](https://i.imgur.com/vUY5HZW.png)
 
