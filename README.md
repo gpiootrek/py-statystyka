@@ -8,7 +8,7 @@ Projekt został zrealizowany zgodnie z większością założeń. Nie udało si�
 # Uruchomienie projektu
 Do uruchomienia programu konieczne jest zainstalowanie zaimplementowanych w nim bibliotek.
 
-    pip install tkiner
+    pip install tkinter
 
     pip install matplotlib
 Po zainstalowaniu bibliotek, należy uruchomić program poprzez skrypt main.py znajdujący się w głównym folderze projektu.
