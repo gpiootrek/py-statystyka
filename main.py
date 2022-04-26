@@ -3,6 +3,7 @@ from tkinter import ttk
 import tkinter.font as TkFont
 from pages import start_page
 
+
 def darkstyle(root):
     style = ttk.Style(root)
     root.tk.call('source', 'azure dark/azure dark.tcl')

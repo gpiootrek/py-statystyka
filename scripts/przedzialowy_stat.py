@@ -1,7 +1,6 @@
 import math
 
 
-# TODO wzory na szereg rozdzielczy przedzialowy
 class Statistics:
     def __init__(self, data):
         self.data = data
@@ -16,9 +15,6 @@ class Statistics:
         for key in self.data:
             counter += self.data[key]
         return counter
-
-    def median(self):
-        pass
 
     def mean(self):
         counter = 0

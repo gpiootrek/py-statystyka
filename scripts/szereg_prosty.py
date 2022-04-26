@@ -18,7 +18,6 @@ def open_file(path, type):
             try:
                 data.append(float(row[0].replace(',', '.')))
             except (ValueError):
-                # TODO zapytac czy uzytkownik chce poprawic linijke
                 res = messagebox.askyesno(title="Blad przy importowaniu danych!",
                                           message=f'Wystapil blad w wierszu nr {row_index}:\n{row[0]}\nCzy chcesz zaimportowac dane bez tego wiersza?')
                 if res == False:

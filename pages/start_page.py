@@ -36,7 +36,6 @@ class StartPage(tk.Frame):
         self.file_input.pack(side="top", pady=10)
 
     # handle file upload
-
     def upload_file(self, controller):
         file_path = filedialog.askopenfilename()
 

@@ -6,7 +6,6 @@ headers = []
 data = {}
 
 
-# TODO Zapytac uzytkownika o naglowki, jesli plik nie posiada, dodac mozliwosc dodania w programie
 def open_file(path, type):
     with open(path, encoding="utf-8-sig") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=';')
@@ -19,7 +18,6 @@ def open_file(path, type):
                     a, b = row[0].split('-')
                     data[(float(a),float(b))] = float(row[1])
                 except ValueError:
-                    # TODO zapytac czy uzytkownik chce poprawic linijke
                     res = messagebox.askyesno(title="Blad przy importowaniu danych!",
                                         message=f'Wystapil blad w wierszu nr {row_index}:\n{row[0]}; {row[1]}\nPoprawny format:\nx - y; z\nCzy chcesz zaimportowac dane bez tego wiersza?')
                     if res==False:
@@ -62,7 +60,6 @@ class RozdzielczyPrzedzialowy:
         stats = przedzialowy_stat.Statistics(data)
         mean = stats.mean
         stdev = stats.stdev
-        # median = stats.median
         interpretations = labels.Labels(stats.kurtoza, stats.wspzm, stats.wspasm)
 
         mean_label = tk.Label(
@@ -72,10 +69,6 @@ class RozdzielczyPrzedzialowy:
         mean_interpretation = tk.Label(
             root, text=f"Srednia wartosc w badanej próbie wynosi {round(mean,2)}", font=controller.interpretation_font, foreground="#ccc")
         mean_interpretation.pack()
-
-        # median_label = tk.Label(
-        #     root, text=f"Mediana: {round(median,2)}", font=controller.stats_font)
-        # median_label.pack()
 
         stdev_label = tk.Label(
             root, text=f"Odchylenie standardowe: {round(stdev,2)}", font=controller.stats_font)
